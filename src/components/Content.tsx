@@ -1,32 +1,28 @@
 import CardPokemon from "./CardPokemon.tsx";
 import BottomNav from "./BottomNav.tsx";
 import {useState, useEffect, type MouseEventHandler} from "react";
-import type {PokemonDetails, PokemonResponse, PokemonResult} from "../types/PokemonRes.tsx";
+import type {PokemonDetails, PokemonResponse} from "../types/PokemonRes.tsx";
+import {getPokemon} from "@/utils/pokeApi.tsx";
 
-export default function Content({pokemon, previousPage, nextPage, numberPage}: {
-    pokemon: PokemonResponse,
+export default function Content({dataList, previousPage, nextPage, numberPage, loading, error}: {
+    dataList: PokemonResponse,
     previousPage: MouseEventHandler,
     nextPage: MouseEventHandler,
     numberPage: number,
+    loading: boolean,
+    error: boolean
 }) {
     const [pokemonData, setPokemonData] = useState<PokemonDetails[]>([]);
-    const {results} = pokemon;
+    const {results} = dataList;
 
     useEffect(() => {
         const fetchDetails = async () => {
-            const data = await Promise.all(
-                results.map(async (pokemon: PokemonResult) => {
-                    const response = await fetch(pokemon.url);
-                    const rawData = await response.json();
-                    return {
-                        id: rawData.id,
-                        name: rawData.name,
-                        image: rawData.sprites.other['official-artwork'].front_default,
-                        types: rawData.types
-                    } as PokemonDetails;
-                })
-            )
-            setPokemonData(data)
+            try {
+                const data = await getPokemon(results)
+                setPokemonData(data)
+            } catch (e) {
+                console.error(e)
+            }
         };
         fetchDetails();
     }, [results]);
@@ -45,6 +41,9 @@ export default function Content({pokemon, previousPage, nextPage, numberPage}: {
                     </select>
                 </aside>
             </div>
+
+            {loading && <p>Loading...</p>}
+            {error && <p>Error</p>}
 
             <div className={"grid grid-cols-4 gap-4 mt-5 w-full items-center"}>
                 {pokemonData.map((pokemon: PokemonDetails) => (

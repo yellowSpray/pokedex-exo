@@ -28,6 +28,7 @@ export default function BottomNav({previous, next, numberPage}: {
                         }
                     />
                 </PaginationItem>
+
                 <PaginationItem>
                     <PaginationLink href="#">{numberPage}</PaginationLink>
                 </PaginationItem>

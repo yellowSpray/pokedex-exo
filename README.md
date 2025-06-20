@@ -1,4 +1,4 @@
-# Pokedex
+# Pokédex
 ## Stack 🧪
 * Vite
 * React
@@ -8,10 +8,10 @@
 * lucide-react
 
 ## Features ✅
-* list of pokemon
+* list of pokémon
 
 ## TODO 🚧
-* pokemon details  
+* pokémon details  
 * pagination
 * search
 * filter

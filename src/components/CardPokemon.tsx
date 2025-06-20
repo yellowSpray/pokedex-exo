@@ -1,7 +1,19 @@
 import type {PokemonType} from "../types/PokemonRes.tsx";
+import { Link } from "react-router";
 
-export default function CardPokemon({id, name, image, types}: { id: number, name: string, image: string, types: PokemonType[] }) {
-
+export default function CardPokemon(
+    {
+        id, 
+        name, 
+        image, 
+        types
+    }: { 
+        id: number, 
+        name: string, 
+        image: string, 
+        types: PokemonType[] 
+    }
+){
     const colorType = (type: string): string  => {
         switch (type) {
             case "normal":
@@ -46,17 +58,19 @@ export default function CardPokemon({id, name, image, types}: { id: number, name
     }
 
     return (
-        <article className={"flex flex-col items-center"}>
-            <div className={"flex flex-row justify-center items-center p-5 bg-gray-100"}>
-                <img src={image} alt={name} className={"w-full"}/>
-            </div>
-            <p>N° {id}</p>
-            <h4 className={"uppercase font-bold"}>{name}</h4>
-            <ul className={"flex flex-row justify-center items-center gap-2 mt-2 w-full"}>
-                {types.map(type => (
-                    <li key={type.type.name} className={`text-sm text-center rounded-full py-1 px-1 w-1/3 ${colorType(type.type.name)}`}>{type.type.name}</li>
-                ))}
-            </ul>
-        </article>
+        <Link to={`${id}`} discover="none">
+            <article className={"flex flex-col items-center"}>
+                <div className={"flex flex-row justify-center items-center p-5 bg-gray-100"}>
+                    <img src={image} alt={name} className={"w-full"}/>
+                </div>
+                <p>N° {id}</p>
+                <h4 className={"uppercase font-bold"}>{name}</h4>
+                <ul className={"flex flex-row justify-center items-center gap-2 mt-2 w-full"}>
+                    {types.map(type => (
+                        <li key={type.type.name} className={`text-sm text-center rounded-full py-1 px-1 w-1/3 ${colorType(type.type.name)}`}>{type.type.name}</li>
+                    ))}
+                </ul>
+            </article>
+        </Link>
     )
 }
