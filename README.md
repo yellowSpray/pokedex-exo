@@ -9,9 +9,9 @@
 
 ## Features ✅
 * list of pokémon
+* pokémon details  
 
 ## TODO 🚧
-* pokémon details  
 * pagination
 * search
 * filter
